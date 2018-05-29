@@ -20,37 +20,34 @@ class infoGAN(object):
         self.epoch = epoch
         self.batch_size = batch_size
 
-        if dataset_name == 'mnist' or dataset_name == 'fashion-mnist':
-            # parameters
-            self.input_height = 28
-            self.input_width = 28
-            self.output_height = 28
-            self.output_width = 28
+        # parameters
+        self.input_height = 28
+        self.input_width = 28
+        self.output_height = 28
+        self.output_width = 28
 
-            self.z_dim = z_dim         # dimension of noise-vector
-            self.y_dim = 12         # dimension of code-vector (label+two features)
-            self.c_dim = 1
+        self.z_dim = z_dim         # dimension of noise-vector
+        self.y_dim = 12         # dimension of code-vector (label+two features)
+        self.c_dim = 1
 
-            self.SUPERVISED = SUPERVISED # if it is true, label info is directly used for code
+        self.SUPERVISED = SUPERVISED # if it is true, label info is directly used for code
 
-            # train
-            self.learning_rate = 0.0002
-            self.beta1 = 0.5
+        # train
+        self.learning_rate = 0.0002
+        self.beta1 = 0.5
 
-            # test
-            self.sample_num = 64  # number of generated images to be saved
+        # test
+        self.sample_num = 64  # number of generated images to be saved
 
-            # code
-            self.len_discrete_code = 10  # categorical distribution (i.e. label)
-            self.len_continuous_code = 2  # gaussian distribution (e.g. rotation, thickness)
+        # code
+        self.len_discrete_code = 10  # categorical distribution (i.e. label)
+        self.len_continuous_code = 2  # gaussian distribution (e.g. rotation, thickness)
 
-            # load mnist
-            self.data_X, self.data_y = load_mnist(self.dataset_name)
+        # load mnist
+        self.data_X, self.data_y = load_mnist(self.dataset_name)
 
-            # get number of batches for a single epoch
-            self.num_batches = len(self.data_X) // self.batch_size
-        else:
-            raise NotImplementedError
+        # get number of batches for a single epoch
+        self.num_batches = len(self.data_X) // self.batch_size
 
     def classifier(self, x, is_training=True, reuse=False):
         # Network Architecture is exactly same as in infoGAN (https://arxiv.org/abs/1606.03657)

@@ -20,31 +20,28 @@ class CGAN(object):
         self.epoch = epoch
         self.batch_size = batch_size
 
-        if dataset_name == 'mnist' or dataset_name == 'fashion-mnist':
-            # parameters
-            self.input_height = 28
-            self.input_width = 28
-            self.output_height = 28
-            self.output_width = 28
+        # parameters
+        self.input_height = 28
+        self.input_width = 28
+        self.output_height = 28
+        self.output_width = 28
 
-            self.z_dim = z_dim         # dimension of noise-vector
-            self.y_dim = 10         # dimension of condition-vector (label)
-            self.c_dim = 1
+        self.z_dim = z_dim         # dimension of noise-vector
+        self.y_dim = 10         # dimension of condition-vector (label)
+        self.c_dim = 1
 
-            # train
-            self.learning_rate = 0.0002
-            self.beta1 = 0.5
+        # train
+        self.learning_rate = 0.0002
+        self.beta1 = 0.5
 
-            # test
-            self.sample_num = 64  # number of generated images to be saved
+        # test
+        self.sample_num = 64  # number of generated images to be saved
 
-            # load mnist
-            self.data_X, self.data_y = load_mnist(self.dataset_name)
+        # load mnist
+        self.data_X, self.data_y = load_mnist(self.dataset_name)
 
-            # get number of batches for a single epoch
-            self.num_batches = len(self.data_X) // self.batch_size
-        else:
-            raise NotImplementedError
+        # get number of batches for a single epoch
+        self.num_batches = len(self.data_X) // self.batch_size
 
 
     def discriminator(self, x, y, is_training=True, reuse=False):

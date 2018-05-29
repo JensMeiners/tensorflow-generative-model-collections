@@ -16,6 +16,8 @@ import tensorflow as tf
 import tensorflow.contrib.slim as slim
 
 def load_mnist(dataset_name):
+    dataset_params = dataset_name.split('_')
+    dataset_name, dataset_size = dataset_params[0], int(dataset_params[1])
     data_dir = os.path.join("./data", dataset_name)
 
     def extract_data(filename, num_data, head_size, data_size):
@@ -48,6 +50,9 @@ def load_mnist(dataset_name):
     np.random.shuffle(X)
     np.random.seed(seed)
     np.random.shuffle(y)
+
+    X = X[0: dataset_size]
+    y = y[0: dataset_size]
 
     y_vec = np.zeros((len(y), 10), dtype=np.float)
     for i, label in enumerate(y):
