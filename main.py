@@ -35,6 +35,7 @@ def parse_args():
     parser.add_argument('--epoch', type=int, default=20, help='The number of epochs to run')
     parser.add_argument('--batch_size', type=int, default=64, help='The size of batch')
     parser.add_argument('--z_dim', type=int, default=62, help='Dimension of noise vector')
+    parser.add_argument('--nsamples', type=int, default=1000, help='The number of samples to generate after training.')
     parser.add_argument('--checkpoint_dir', type=str, default='checkpoint',
                         help='Directory name to save the checkpoints')
     parser.add_argument('--result_dir', type=str, default='results',
@@ -106,6 +107,9 @@ def main():
         # visualize learned generator
         gan.visualize_results(args.epoch-1)
         print(" [*] Testing finished!")
+
+        # generate samples
+        gan.sample_all_y(args.nsamples)
 
 if __name__ == '__main__':
     main()

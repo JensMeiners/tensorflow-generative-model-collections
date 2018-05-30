@@ -217,6 +217,32 @@ class CVAE(object):
         # save model for final step
         self.save(self.checkpoint_dir, counter)
 
+    def sample_all_y(self, n):
+        import pickle
+        per_class = n // self.y_dim
+        for i in range(self.y_dim):
+            samples = self.sample(i, per_class)
+            pickle.dump(samples, open(check_folder(self.result_dir + '/' + self.model_dir) + '/' + self.model_name +'cl'+str(i)+'-'+per_class+'.p', 'wb'))
+
+    def sample(self, cl, n):
+        y = np.zeros(self.batch_size, dtype=np.int64) + cl
+        y_one_hot = np.zeros((self.batch_size, self.y_dim))
+        y_one_hot[np.arange(self.batch_size), y] = 1
+
+        all_samples = []
+        while len(all_samples) < n:
+            z_sample = prior.gaussian(self.batch_size, self.z_dim)
+
+            samples = self.sess.run(self.fake_images, feed_dict={self.z: z_sample, self.y: y_one_hot})
+
+            if len(all_samples) == 0:
+                all_samples = samples
+            else:
+                all_samples = np.concatenate((all_samples, samples), axis=0)
+
+        return all_samples
+
+
     def visualize_results(self, epoch):
         tot_num_samples = min(self.sample_num, self.batch_size)
         image_frame_dim = int(np.floor(np.sqrt(tot_num_samples)))
