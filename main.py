@@ -109,6 +109,7 @@ def main():
         print(" [*] Testing finished!")
 
         # generate samples
+        print(" [*] Generating Samples!")
         gan.sample_all_y(args.nsamples)
 
 if __name__ == '__main__':
