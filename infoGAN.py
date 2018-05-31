@@ -278,8 +278,8 @@ class infoGAN(object):
 
     def sample_all_y(self, n):
         import pickle
-        per_class = n // self.y_dim
-        for i in range(self.y_dim):
+        per_class = n // self.len_discrete_code
+        for i in range(self.len_discrete_code):
             print(" [*] --- class: "+str(i))
             samples = self.sample(i, per_class)
             pickle.dump(samples, open(check_folder(self.result_dir + '/' + self.model_dir) + '/' + self.model_name +'cl'+str(i)+'-'+str(per_class)+'.p', 'wb'))
