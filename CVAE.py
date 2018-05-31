@@ -222,7 +222,7 @@ class CVAE(object):
         per_class = n // self.y_dim
         for i in range(self.y_dim):
             samples = self.sample(i, per_class)
-            pickle.dump(samples, open(check_folder(self.result_dir + '/' + self.model_dir) + '/' + self.model_name +'cl'+str(i)+'-'+per_class+'.p', 'wb'))
+            pickle.dump(samples, open(check_folder(self.result_dir + '/' + self.model_dir) + '/' + self.model_name +'cl'+str(i)+'-'+str(per_class)+'.p', 'wb'))
 
     def sample(self, cl, n):
         y = np.zeros(self.batch_size, dtype=np.int64) + cl
